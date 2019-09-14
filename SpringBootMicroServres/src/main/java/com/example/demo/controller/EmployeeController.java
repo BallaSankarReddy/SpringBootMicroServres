@@ -31,7 +31,11 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
-
+	/*
+	 * @Autowired private EmployeeAddress employeeAddress;
+	 * 
+	 * @Autowired private EmployeeAccountDetails employeeAccountDetails;
+	 */
 	
 
 	@GetMapping("/employees")
@@ -53,5 +57,14 @@ public class EmployeeController {
 	@PostMapping("/employees")
 	public Employee createEmployee(@Valid @RequestBody Employee employee) {
 		return employeeRepository.save(employee);
+	}
+	
+	@GetMapping("/employee/{firstName}")
+	public ResponseEntity<Employee> getEmployeeByFistName(String firstName) throws ResourceNotFoundException{
+		
+		Optional.of(employeeRepository.getByFirstName(firstName))
+				.orElseThrow(() -> new ResourceNotFoundException(""+firstName));
+		Optional.of(employeeRepository.getByFirstName(firstName));
+		return null;
 	}
 }
